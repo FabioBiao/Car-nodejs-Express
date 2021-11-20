@@ -7,7 +7,7 @@ const connectDB = (url) => {
             useUnifiedTopology: true,
         })
         .then(() => {
-            console.log("Successfully connect to MongoDB.");
+            console.info("Successfully connect to MongoDB.");
             initial();
         })
         .catch((err) => {
@@ -21,7 +21,7 @@ module.exports = connectDB;
 // SET DB tables
 function initial() {
     console.log("initial");
-    
+
     // set roles on DB
     setRoles();
 }
@@ -32,7 +32,7 @@ function setRoles() {
         mongoose: mongoose,
         user: require("../models/User.model"),
         role: require("../models/Role.model"),
-        ROLES: ["user", "admin", "moderator"]
+        ROLES: ["user", "admin", "moderator"],
     };
     // db.mongoose = mongoose;
     // db.user = require("../models/User.model");
@@ -40,37 +40,58 @@ function setRoles() {
     // db.ROLES = ["user", "admin", "moderator"];
 
     const Role = db.role;
+
+    const RolesData = [
+        {
+            name: "user",
+        },
+        {
+            name: "moderator",
+        },
+        {
+            name: "admin",
+        },
+    ];
+
     Role.estimatedDocumentCount((err, count) => {
         if (!err && count === 0) {
-            new Role({
-                name: "user",
-            }).save((err) => {
-                if (err) {
-                    console.log("error", err);
-                }
+            Role.insertMany(RolesData)
+                .then((value) => {
+                    console.log("Saved Successfully");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
-                console.log("added 'user' to roles collection");
-            });
+            // new Role({
+            //     name: "user",
+            // }).save((err) => {
+            //     if (err) {
+            //         console.log("error", err);
+            //     }
 
-            new Role({
-                name: "moderator",
-            }).save((err) => {
-                if (err) {
-                    console.log("error", err);
-                }
+            //     console.log("added 'user' to roles collection");
+            // });
 
-                console.log("added 'moderator' to roles collection");
-            });
+            // new Role({
+            //     name: "moderator",
+            // }).save((err) => {
+            //     if (err) {
+            //         console.log("error", err);
+            //     }
 
-            new Role({
-                name: "admin",
-            }).save((err) => {
-                if (err) {
-                    console.log("error", err);
-                }
+            //     console.log("added 'moderator' to roles collection");
+            // });
 
-                console.log("added 'admin' to roles collection");
-            });
+            // new Role({
+            //     name: "admin",
+            // }).save((err) => {
+            //     if (err) {
+            //         console.log("error", err);
+            //     }
+
+            //     console.log("added 'admin' to roles collection");
+            // });
         }
     });
 }

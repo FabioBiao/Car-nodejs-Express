@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 
 const CarsSchema = new mongoose.Schema({
     brand: {
+        // type: mongoose.Schema.ObjectId,
+        // ref: "Brand",
+        // required: true,
         type: String,
-        required: [true, "Please provide name"],
-        minlength: 3,
-        maxlength: 50,
+        required: [true, "Please provide a Car Brand"],
+        maxlength: [200, "Brand can not be more than 200 characters"],
     },
     description: {
         type: String,
@@ -22,14 +24,14 @@ const CarsSchema = new mongoose.Schema({
         required: false,
         default: "/uploads/example.jpeg",
     },
-    category: {
-        type: String,
-        required: [true, "Please provide product category"],
-        enum: ["office", "kitchen", "bedroom"],
-    },
+    // category: {
+    //     type: String,
+    //     required: [true, "Please provide product category"],
+    //     enum: ["office", "kitchen", "bedroom"],
+    // },
     company: {
         type: String,
-        required: [true, "Please provide company"],
+        required: [false, "Please provide company"],
         enum: {
             values: ["ikea", "liddy", "marcos"],
             message: "{VALUE} is not supported",
@@ -38,7 +40,7 @@ const CarsSchema = new mongoose.Schema({
     colors: {
         type: [String],
         default: ["#222"],
-        required: true,
+        required: false,
     },
     user: {
         type: mongoose.Types.ObjectId,

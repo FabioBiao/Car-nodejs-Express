@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 // const validator = require("validator");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 let validateEmail = function (email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -66,5 +66,29 @@ UserSchema.methods.comparePassword = async function (canditatePassword) {
     const isMatch = await bcrypt.compare(canditatePassword, this.password);
     return isMatch;
 };
+
+// log timings
+UserSchema.pre("find", function () {
+    this._startTime = Date.now();
+});
+
+// log timings
+UserSchema.post("find", function () {
+    if (this._startTime != null) {
+        console.log("Runtime in MS: ", Date.now() - this._startTime);
+    }
+});
+
+// log timings
+UserSchema.pre("findOne", function () {
+    this._startTime = Date.now();
+});
+
+// log timings
+UserSchema.post("findOne", function () {
+    if (this._startTime != null) {
+        console.log("findOne Runtime in MS: ", Date.now() - this._startTime);
+    }
+});
 
 module.exports = mongoose.model("User", UserSchema);

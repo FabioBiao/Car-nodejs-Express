@@ -12,11 +12,11 @@ const authenticateUser = async (req, res, next) => {
     // console.log("Header: ");
     // console.log(req.headers);
     let { refreshToken, accessToken, token } = req.signedCookies;
-    console.log(refreshToken, accessToken, token);
+    // console.log(refreshToken, accessToken, token);
 
     // let { refreshToken, accessToken } = req.headers;
-    console.log("debug authenticateUser");
-    console.log(req.signedCookies);
+    // console.log("debug authenticateUser");
+    // console.log(req.signedCookies);
     try {
         if (accessToken) {
             const payload = isTokenValid(accessToken);

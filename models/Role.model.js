@@ -9,4 +9,9 @@ const RoleSchema = new mongoose.Schema({
     },
 });
 
+// RoleSchema.create({ size: "small" }, function (err, small) {
+//     if (err) return handleError(err);
+//     // saved!
+// });
+
 module.exports = mongoose.model("Role", RoleSchema);
