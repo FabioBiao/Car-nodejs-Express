@@ -1,3 +1,7 @@
+# exploring nodejs Project structure
+- Express
+- with mongoDb database
+
 # dashboard-server
 node app.js
 npm run dev
